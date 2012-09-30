@@ -1,0 +1,37 @@
+﻿using System.Data.Entity;
+using EbookZone.Domain;
+using EbookZone.Utils.Constants;
+using EbookZone.Utils.Helpers;
+
+namespace EbookZone.Data
+{
+    public class DataContext<T> : DbContext where T : BaseEntity
+    {
+        public static string ConnString = ApplicationConfig.ConnStringSetting;
+
+        public DbSet<T> Entities { get; set; }
+
+        public DataContext()
+            : base(ConnString)
+        {
+            Database.SetInitializer(new DatabaseInitializator<T>());
+            Database.Initialize(true);
+
+            Configuration.AutoDetectChangesEnabled = false;
+
+            var exist = Database.Exists();
+
+            if (!exist)
+            {
+                Database.Create();
+            }
+
+            Database.Connection.Open();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<T>().Map(m => m.MapInheritedProperties()).ToTable(this.GetTableName<T>());
+        }
+    }
+}
