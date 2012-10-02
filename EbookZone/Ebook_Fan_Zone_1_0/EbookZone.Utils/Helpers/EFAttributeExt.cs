@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using EbookZone.Domain;
+using EbookZone.Domain.Base;
 
 namespace EbookZone.Utils.Helpers
 {

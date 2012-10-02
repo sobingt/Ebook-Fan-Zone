@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EbookZone.Domain;
+using EbookZone.Domain.Base;
 
 namespace EbookZone.Repository.Base
 {

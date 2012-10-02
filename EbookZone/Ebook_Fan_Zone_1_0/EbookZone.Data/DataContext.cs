@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using EbookZone.Domain;
+using EbookZone.Domain.Base;
 using EbookZone.Utils.Constants;
 using EbookZone.Utils.Helpers;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EbookZone.Domain
+namespace EbookZone.Domain.Base
 {
     public class BaseEntity
     {

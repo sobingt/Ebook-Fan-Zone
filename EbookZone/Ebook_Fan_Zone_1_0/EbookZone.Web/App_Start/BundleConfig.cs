@@ -30,10 +30,7 @@ namespace EbookZone.Web.App_Start
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
                 "~/Scripts/bootstrap.min.js")
-            );    
-
-            bundles.Add(new ScriptBundle("~/Scripts/bootstrap-utils")
-                .IncludeDirectory("~/Scripts/bootstrap_utils", "*.js"));
+            );
         }
     }
 }
