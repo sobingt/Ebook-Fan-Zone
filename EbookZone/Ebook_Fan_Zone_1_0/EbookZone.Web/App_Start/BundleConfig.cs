@@ -19,9 +19,7 @@ namespace EbookZone.Web.App_Start
             // JavaScript Bundles
 
             bundles.Add(new ScriptBundle("~/Scripts/jquery").Include(
-                "~/Scripts/jquery-1.8.2.min.js",
-                "~/Scripts/jquery-ui-1.8.23.js",
-                "~/Scripts/jquery.validate.min.js")
+                "~/Scripts/jquery-1.8.2.min.js")
             );
 
             bundles.Add(new ScriptBundle("~/Scripts/knockout").Include(
