@@ -1,7 +1,8 @@
 ﻿using System;
 using EbookZone.Domain.Base;
+using EbookZone.Domain.Enums;
 
-namespace EbookZone.Domain.Enums
+namespace EbookZone.Domain
 {
     public class User : BaseEntity
     {

@@ -2,18 +2,20 @@
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
+using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 using DotNetOpenAuth.OpenId.RelyingParty;
+using EbookZone.Web.Models;
 
 namespace EbookZone.Web.Controllers
 {
     public class AuthorizeController : Controller
     {
-        private static readonly OpenIdRelyingParty openIdProvider = new OpenIdRelyingParty();
+        private static readonly OpenIdRelyingParty OpenIdProvider = new OpenIdRelyingParty();
 
         public ActionResult Index(string userOpenId)
         {
             // Response from provider
-            IAuthenticationResponse response = openIdProvider.GetResponse();
+            IAuthenticationResponse response = OpenIdProvider.GetResponse();
 
             if (response == null)
             {
@@ -23,13 +25,24 @@ namespace EbookZone.Web.Controllers
                 {
                     try
                     {
-                        IAuthenticationRequest request = openIdProvider.CreateRequest(userOpenId);
-                        FetchRequest fetch = new FetchRequest();
-                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Contact.Email, true));
-                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Name.First, true));
-                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Name.Last, true));
-                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.BirthDate.WholeBirthDate, true));
+                        IAuthenticationRequest request = OpenIdProvider.CreateRequest(userOpenId);
+                        
+                        var fetch = new FetchRequest();
+
+                        fetch.Attributes.AddRequired(WellKnownAttributes.Contact.Email);
+                        fetch.Attributes.AddRequired(WellKnownAttributes.Name.First);
+                        fetch.Attributes.AddRequired(WellKnownAttributes.Name.Last);
+
                         request.AddExtension(fetch);
+
+                        request.AddExtension(new ClaimsRequest()
+                                                 {
+                                                     FullName = DemandLevel.Require,
+                                                     Nickname = DemandLevel.Require,
+                                                     BirthDate = DemandLevel.Require,
+                                                     Gender = DemandLevel.Require,
+                                                     Country = DemandLevel.Require
+                                                 });
 
                         return request.RedirectingResponse.AsActionResult();
                     }
@@ -46,7 +59,10 @@ namespace EbookZone.Web.Controllers
             {
                 case AuthenticationStatus.Authenticated:
                     {
-                        //var fetches = response.GetExtension<FetchResponse>(); - fetches - get google account informations
+                        var fetches = response.GetExtension<FetchResponse>(); // fetches - get google account informations
+                        var profileInfo = response.GetExtension<ClaimsResponse>();
+
+
 
                         TempData["id"] = response.ClaimedIdentifier;
                         return RedirectToAction("Index", "Home");
