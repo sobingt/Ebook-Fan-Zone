@@ -7,5 +7,7 @@ namespace EbookZone.Web.Services
     public interface IBaseService<T> where T : BaseViewModel
     {
         void Execute(T viewModel, EntityAction action);
+
+        List<T> Load();
     }
 }

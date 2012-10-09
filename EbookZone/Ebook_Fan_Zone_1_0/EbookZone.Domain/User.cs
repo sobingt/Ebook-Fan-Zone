@@ -20,7 +20,7 @@ namespace EbookZone.Domain
 
         public UserType UserType { get; set; }
 
-        public RegisterType RegisterType { get; set; }
+        public AccountType RegisterType { get; set; }
 
         public string GoogleId { get; set; }
 

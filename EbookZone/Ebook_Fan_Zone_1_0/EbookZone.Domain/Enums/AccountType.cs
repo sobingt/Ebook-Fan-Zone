@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EbookZone.Domain.Enums
 {
-    public enum RegisterType
+    public enum AccountType
     {
         Default,
         Google,
