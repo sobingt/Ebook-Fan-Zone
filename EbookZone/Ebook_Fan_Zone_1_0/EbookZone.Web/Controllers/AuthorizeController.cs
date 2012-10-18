@@ -89,26 +89,46 @@ namespace EbookZone.Web.Controllers
             var request = new RestRequest("oauth/request_token", Method.POST);
             var response = client.Execute(request);
 
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                var qs = HttpUtility.ParseQueryString(response.Content);
-                var oauth_token = qs["oauth_token"];
-                var oauth_token_secret = qs["oauth_token_secret"];
+            var qs = HttpUtility.ParseQueryString(response.Content);
+            var oauth_token = this.Session["oauth_token"] = qs["oauth_token"];
+            var oauth_token_secret = this.Session["oauth_token_secret"] = qs["oauth_token_secret"];
 
-                request = new RestRequest("oauth/authorize");
-                request.AddParameter("oauth_token", oauth_token);
-                request.AddParameter("oauth_callback", this.TwitterCallbackUrl);
-                
+            request = new RestRequest("oauth/authorize");
+            request.AddParameter("oauth_token", oauth_token);
+            request.AddParameter("oauth_callback", this.TwitterCallbackUrl);
 
-                var url = client.BuildUri(request).ToString();
+            var url = client.BuildUri(request).ToString();
 
-                return url;
-            }
+            return url;
         }
 
         public ActionResult TwitterAuth()
         {
-            //oauth_verifier
+            var verifier = Request.Params["oauth_verifier"];
+            var oauth_token = this.Session["oauth_token"].ToString();
+            var oauth_token_secret = this.Session["oauth_token_secret"].ToString();
+
+            var baseUrl = "http://api.twitter.com";
+            var client = new RestClient(baseUrl);
+
+            var request = new RestRequest("oauth/access_token", Method.POST);
+
+            client.Authenticator = OAuth1Authenticator.ForAccessToken(
+                this.TwitterConsumerKey, this.TwitterConsumerSecret, oauth_token, oauth_token_secret, verifier);
+
+            var response = client.Execute(request);
+
+            var qs = HttpUtility.ParseQueryString(response.Content);
+            oauth_token = qs["oauth_token"];
+            oauth_token_secret = qs["oauth_token_secret"];
+
+            request = new RestRequest("1.1/account/verify_credentials.json");
+            client.Authenticator = OAuth1Authenticator.ForProtectedResource(
+                TwitterConsumerKey, TwitterConsumerSecret, oauth_token, oauth_token_secret
+            );
+
+            response = client.Execute(request);
+            JObject jObject = JObject.Parse(response.Content);
 
             return RedirectToAction("Index", "Home");
         }
