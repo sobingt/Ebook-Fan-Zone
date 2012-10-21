@@ -332,6 +332,10 @@
       <Project>{8e57a8d9-946d-4f94-9c17-f0fa694c10df}</Project>
       <Name>EbookZone.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EbookZone.Repository\EbookZone.Repository.csproj">
+      <Project>{957fcf5b-4da0-42ce-8ed9-1e1c9683ddbf}</Project>
+      <Name>EbookZone.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

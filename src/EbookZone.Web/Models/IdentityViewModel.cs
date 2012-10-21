@@ -17,5 +17,7 @@ namespace EbookZone.Web.Models
         public string Password { get; set; }
 
         public AccountType AccountType { get; set; }
+
+        public UserType UserType { get; set; }
     }
 }

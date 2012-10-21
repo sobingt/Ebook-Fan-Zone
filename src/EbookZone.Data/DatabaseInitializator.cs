@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using EbookZone.Domain;
 using EbookZone.Domain.Base;
 
 namespace EbookZone.Data

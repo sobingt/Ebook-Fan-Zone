@@ -6,11 +6,7 @@ namespace EbookZone.Utils.Constants
     {
         public static string ConnStringSetting
         {
-            get
-            {
-                var value = ConfigurationManager.GetSection("ConnectionStringName");
-                return value.ToString();
-            }
+            get { return ConfigurationManager.ConnectionStrings["EZConnString"].ConnectionString; }
         }
     }
 }
