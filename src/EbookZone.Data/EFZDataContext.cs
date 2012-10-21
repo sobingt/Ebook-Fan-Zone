@@ -5,16 +5,18 @@ using EbookZone.Utils.Helpers;
 
 namespace EbookZone.Data
 {
-    public class DataContext<T> : DbContext where T : BaseEntity
+    public class EFZDataContext<T> : DbContext where T : BaseEntity
     {
         public static string ConnString = ApplicationConfig.ConnStringSetting;
 
         public DbSet<T> Entities { get; set; }
 
-        public DataContext()
+        public EFZDataContext()
             : base(ConnString)
         {
-            Database.SetInitializer(new DatabaseInitializator<T>());
+            //Database.SetInitializer(new DatabaseInitializator<T>());
+            Database.SetInitializer(new CreateDatabaseIfNotExists<EFZDataContext<T>>());
+
             Database.Initialize(true);
 
             Configuration.AutoDetectChangesEnabled = false;

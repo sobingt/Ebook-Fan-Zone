@@ -4,9 +4,9 @@ using EbookZone.Domain.Base;
 
 namespace EbookZone.Data
 {
-    public class DatabaseInitializator<T> : DropCreateDatabaseIfModelChanges<DataContext<T>> where T : BaseEntity
+    public class DatabaseInitializator<T> : DropCreateDatabaseIfModelChanges<EFZDataContext<T>> where T : BaseEntity
     {
-        protected override void Seed(DataContext<T> context)
+        protected override void Seed(EFZDataContext<T> context)
         {
             // Items which creates after database creation on Server
 

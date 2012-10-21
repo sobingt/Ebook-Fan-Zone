@@ -13,7 +13,7 @@ namespace EbookZone.Repository.Base
 
         public void Create(T entity)
         {
-            using (DataContext<T> context = new DataContext<T>())
+            using (EFZDataContext<T> context = new EFZDataContext<T>())
             {
                 context.Entities.Add(entity);
                 context.SaveChanges();
@@ -22,7 +22,7 @@ namespace EbookZone.Repository.Base
 
         public IList<T> Load()
         {
-            using (DataContext<T> context = new DataContext<T>())
+            using (EFZDataContext<T> context = new EFZDataContext<T>())
             {
                 return context.Entities.ToList();
             }
@@ -30,7 +30,7 @@ namespace EbookZone.Repository.Base
 
         public T Load(int id)
         {
-            using (DataContext<T> context = new DataContext<T>())
+            using (EFZDataContext<T> context = new EFZDataContext<T>())
             {
                 T entity = context.Entities.Find(id);
                 return entity;
@@ -39,7 +39,7 @@ namespace EbookZone.Repository.Base
 
         public void Update(T entity)
         {
-            using (DataContext<T> context = new DataContext<T>())
+            using (EFZDataContext<T> context = new EFZDataContext<T>())
             {
                 context.Entities.Attach(entity);
                 context.Entry(entity).State = EntityState.Modified;
@@ -49,7 +49,7 @@ namespace EbookZone.Repository.Base
 
         public void Delete(T entity)
         {
-            using (DataContext<T> context = new DataContext<T>())
+            using (EFZDataContext<T> context = new EFZDataContext<T>())
             {
                 context.Entities.Attach(entity);
                 context.Entry(entity).State = EntityState.Deleted;
