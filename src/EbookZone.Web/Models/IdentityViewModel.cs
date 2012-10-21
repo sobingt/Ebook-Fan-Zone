@@ -2,7 +2,7 @@
 
 namespace EbookZone.Web.Models
 {
-    public class RegisterViewModel
+    public class IdentityViewModel
     {
         public string NetworkId { get; set; }
 
@@ -13,6 +13,8 @@ namespace EbookZone.Web.Models
         public string LastName { get; set; }
 
         public string Email { get; set; }
+
+        public string Password { get; set; }
 
         public AccountType AccountType { get; set; }
     }

@@ -199,6 +199,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AuthorizeController.cs" />
     <Compile Include="Controllers\BaseListController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Core\EntityAction.cs" />
@@ -210,14 +211,16 @@
     <Compile Include="Models\Base\BaseViewModel.cs" />
     <Compile Include="Models\FacebookViewModel.cs" />
     <Compile Include="Models\GoogleViewModel.cs" />
-    <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\IdentityViewModel.cs" />
     <Compile Include="Models\TwitterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FacebookService.cs" />
     <Compile Include="Services\GoogleService.cs" />
     <Compile Include="Services\IBaseService.cs" />
+    <Compile Include="Services\IdentityService.cs" />
     <Compile Include="Services\IFacebookService.cs" />
     <Compile Include="Services\IGoogleService.cs" />
+    <Compile Include="Services\IIdentityService.cs" />
     <Compile Include="Services\ITwitterService.cs" />
     <Compile Include="Services\TwitterService.cs" />
   </ItemGroup>
@@ -316,6 +319,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
