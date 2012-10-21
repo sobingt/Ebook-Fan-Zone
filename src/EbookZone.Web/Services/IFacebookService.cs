@@ -2,10 +2,10 @@
 
 namespace EbookZone.Web.Services
 {
-    public interface IGoogleService
+    public interface IFacebookService
     {
         void ExecuteRequest();
 
-        GoogleViewModel GetAccount();
+        FacebookViewModel GetAccount(string secretCode);
     }
 }

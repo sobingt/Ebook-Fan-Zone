@@ -208,11 +208,14 @@
     </Compile>
     <Compile Include="Models\Base\BaseListViewModel.cs" />
     <Compile Include="Models\Base\BaseViewModel.cs" />
+    <Compile Include="Models\FacebookViewModel.cs" />
     <Compile Include="Models\GoogleViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\FacebookService.cs" />
     <Compile Include="Services\GoogleService.cs" />
     <Compile Include="Services\IBaseService.cs" />
+    <Compile Include="Services\IFacebookService.cs" />
     <Compile Include="Services\IGoogleService.cs" />
   </ItemGroup>
   <ItemGroup>

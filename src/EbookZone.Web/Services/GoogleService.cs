@@ -39,7 +39,7 @@ namespace EbookZone.Web.Services
             }
         }
 
-        public GoogleViewModel GetResponse()
+        public GoogleViewModel GetAccount()
         {
             IAuthenticationResponse response = OpenIdProvider.GetResponse();
 

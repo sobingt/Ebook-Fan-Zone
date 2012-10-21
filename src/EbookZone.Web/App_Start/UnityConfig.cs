@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using AutoMapper;
 using EbookZone.Web.Core;
 using EbookZone.Web.Services;
@@ -20,6 +16,7 @@ namespace EbookZone.Web.App_Start
             ControllerBuilder.Current.SetControllerFactory(factory);
 
             container.RegisterType<IGoogleService, GoogleService>();
+            container.RegisterType<IFacebookService, FacebookService>();
 
             // register types
             container.RegisterInstance(Mapper.Engine);

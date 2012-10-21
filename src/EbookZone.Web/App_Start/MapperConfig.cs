@@ -13,6 +13,10 @@ namespace EbookZone.Web.App_Start
                 .ForMember(dest => dest.AccountType, opt => opt.UseValue(AccountType.Google))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
 
+            Mapper.CreateMap<FacebookViewModel, RegisterViewModel>()
+                .ForMember(dest => dest.NetworkId, opt => opt.MapFrom(src => src.FacebookId))
+                .ForMember(dest => dest.AccountType, opt => opt.UseValue(AccountType.Facebook));
+
             Mapper.AssertConfigurationIsValid();
         }
     }

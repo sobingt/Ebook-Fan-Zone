@@ -16,29 +16,12 @@ namespace EbookZone.Web.Controllers
     public class AuthorizeController : Controller
     {
         private readonly IGoogleService _googleService;
+        private readonly IFacebookService _facebookService;
 
-        public AuthorizeController(IGoogleService googleService)
+        public AuthorizeController(IGoogleService googleService, IFacebookService facebookService)
         {
             _googleService = googleService;
-        }
-
-        // Facebook Register Helper
-        private const string GetFacebookCode =
-            @"https://graph.facebook.com/oauth/authorize?client_id={0}&redirect_uri={1}";
-
-        private string ClientID
-        {
-            get { return ConfigurationManager.AppSettings["FacebookAppID"]; }
-        }
-
-        private string ClientSecret
-        {
-            get { return ConfigurationManager.AppSettings["FacebookSecret"]; }
-        }
-
-        private string FacebookCallbackUrl
-        {
-            get { return ConfigurationManager.AppSettings["FacebookCallbackUrl"]; }
+            _facebookService = facebookService;
         }
 
         private string TwitterConsumerKey
@@ -65,6 +48,11 @@ namespace EbookZone.Web.Controllers
                 this._googleService.ExecuteRequest();
             }
 
+            if (accountType == AccountType.Facebook)
+            {
+                this._facebookService.ExecuteRequest();
+            }
+
             //switch (accountType)
             //{
             //    case AccountType.Default:
@@ -79,6 +67,19 @@ namespace EbookZone.Web.Controllers
             //    default:
             //        throw new ArgumentOutOfRangeException();
             //}
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult FacebookAuth()
+        {
+            if (Request.Params.AllKeys.Contains("code"))
+            {
+                var code = Request.Params["code"];
+
+                var facebookModel = _facebookService.GetAccount(code);
+                var viewModel = Mapper.Map<FacebookViewModel, RegisterViewModel>(facebookModel);
+            }
 
             return RedirectToAction("Index", "Home");
         }
@@ -137,41 +138,9 @@ namespace EbookZone.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult FacebookAuth()
-        {
-            if (Request.Params.AllKeys.Contains("code"))
-            {
-                var code = Request.Params["code"];
-                var client = new RestClient("https://graph.facebook.com/oauth/access_token");
-                var request = new RestRequest(Method.GET);
-
-                //request.AddParameter("action", "access_token");
-                request.AddParameter("client_id", this.ClientID);
-                request.AddParameter("redirect_uri", this.FacebookCallbackUrl);
-                request.AddParameter("client_secret", this.ClientSecret);
-                request.AddParameter("code", code);
-
-                var response = client.Execute(request);
-
-                var pairResponse = response.Content.Split('&');
-                var accessToken = pairResponse[0].Split('=')[1];
-
-                client = new RestClient("https://graph.facebook.com/me");
-                request = new RestRequest(Method.GET);
-
-                request.AddParameter("access_token", accessToken);
-
-                response = client.Execute(request);
-
-                JObject jObject = JObject.Parse(response.Content);
-            }
-
-            return RedirectToAction("Index", "Home");
-        }
-
         public ActionResult GoogleAuth()
         {
-            GoogleViewModel model = this._googleService.GetResponse();
+            GoogleViewModel model = this._googleService.GetAccount();
             RegisterViewModel viewModel = Mapper.Map<GoogleViewModel, RegisterViewModel>(model);
 
             return RedirectToAction("Index", "Home");
