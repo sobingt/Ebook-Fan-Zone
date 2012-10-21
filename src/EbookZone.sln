@@ -15,34 +15,7 @@ Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "EbookZone.Planning", "Ebook
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbookZone.Utils", "EbookZone.Utils\EbookZone.Utils.csproj", "{1C8129ED-1611-4BA5-B171-09D4D2E9EA1D}"
 EndProject
-Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://lashtaar-pc:8184/tfs/ebook_fan_zone
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = EbookZone.Domain\\EbookZone.Domain.csproj
-		SccProjectName1 = EbookZone.Domain
-		SccLocalPath1 = EbookZone.Domain
-		SccProjectUniqueName2 = EbookZone.Data\\EbookZone.Data.csproj
-		SccProjectName2 = EbookZone.Data
-		SccLocalPath2 = EbookZone.Data
-		SccProjectUniqueName3 = EbookZone.Repository\\EbookZone.Repository.csproj
-		SccProjectName3 = EbookZone.Repository
-		SccLocalPath3 = EbookZone.Repository
-		SccProjectUniqueName4 = EbookZone.Web\\EbookZone.Web.csproj
-		SccProjectName4 = EbookZone.Web
-		SccLocalPath4 = EbookZone.Web
-		SccProjectUniqueName5 = EbookZone.Test\\EbookZone.Test.csproj
-		SccProjectName5 = EbookZone.Test
-		SccLocalPath5 = EbookZone.Test
-		SccProjectUniqueName6 = EbookZone.Planning\\EbookZone.Planning.modelproj
-		SccProjectName6 = EbookZone.Planning
-		SccLocalPath6 = EbookZone.Planning
-		SccProjectUniqueName7 = EbookZone.Utils\\EbookZone.Utils.csproj
-		SccProjectName7 = EbookZone.Utils
-		SccLocalPath7 = EbookZone.Utils
-	EndGlobalSection
+Globala
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
