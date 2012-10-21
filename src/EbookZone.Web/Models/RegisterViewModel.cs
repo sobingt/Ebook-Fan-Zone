@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using EbookZone.Web.Models.Base;
+﻿using EbookZone.Domain.Enums;
 
 namespace EbookZone.Web.Models
 {
-    public class RegisterViewModel : BaseViewModel
+    public class RegisterViewModel
     {
+        public string NetworkId { get; set; }
+
+        public string UserName { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Email { get; set; }
+
+        public AccountType AccountType { get; set; }
     }
 }

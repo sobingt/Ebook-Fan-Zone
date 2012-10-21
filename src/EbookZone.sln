@@ -11,11 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbookZone.Web", "EbookZone.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbookZone.Test", "EbookZone.Test\EbookZone.Test.csproj", "{FB27AEE4-0C6A-43CC-8AFC-4DEE9FCE19F6}"
 EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "EbookZone.Planning", "EbookZone.Planning\EbookZone.Planning.modelproj", "{F96C1772-B55C-472A-9E27-DF189C487D73}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbookZone.Utils", "EbookZone.Utils\EbookZone.Utils.csproj", "{1C8129ED-1611-4BA5-B171-09D4D2E9EA1D}"
 EndProject
-Globala
+Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -41,10 +39,6 @@ Globala
 		{FB27AEE4-0C6A-43CC-8AFC-4DEE9FCE19F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB27AEE4-0C6A-43CC-8AFC-4DEE9FCE19F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB27AEE4-0C6A-43CC-8AFC-4DEE9FCE19F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F96C1772-B55C-472A-9E27-DF189C487D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F96C1772-B55C-472A-9E27-DF189C487D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F96C1772-B55C-472A-9E27-DF189C487D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F96C1772-B55C-472A-9E27-DF189C487D73}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1C8129ED-1611-4BA5-B171-09D4D2E9EA1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1C8129ED-1611-4BA5-B171-09D4D2E9EA1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C8129ED-1611-4BA5-B171-09D4D2E9EA1D}.Release|Any CPU.ActiveCfg = Release|Any CPU

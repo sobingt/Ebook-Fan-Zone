@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DotNetOpenAuth.Messaging;
-using DotNetOpenAuth.OpenId;
-using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
-using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
-using DotNetOpenAuth.OpenId.RelyingParty;
+using AutoMapper;
 using EbookZone.Domain.Enums;
+using EbookZone.Web.Models;
+using EbookZone.Web.Services;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Authenticators;
@@ -19,9 +15,12 @@ namespace EbookZone.Web.Controllers
 {
     public class AuthorizeController : Controller
     {
-        // Google Register Helper
-        private static readonly OpenIdRelyingParty OpenIdProvider = new OpenIdRelyingParty();
-        private const string UserOpenId = @"https://www.google.com/accounts/o8/id";
+        private readonly IGoogleService _googleService;
+
+        public AuthorizeController(IGoogleService googleService)
+        {
+            _googleService = googleService;
+        }
 
         // Facebook Register Helper
         private const string GetFacebookCode =
@@ -61,20 +60,25 @@ namespace EbookZone.Web.Controllers
         {
             var accountType = (AccountType)Enum.Parse(typeof(AccountType), registerType);
 
-            switch (accountType)
+            if (accountType == AccountType.Google)
             {
-                case AccountType.Default:
-                    break;
-                case AccountType.Google:
-                    return RegisterGoogleAccount();
-                case AccountType.Facebook:
-                    var request = string.Format(GetFacebookCode, this.ClientID, this.FacebookCallbackUrl);
-                    return Redirect(request);
-                case AccountType.Twitter:
-                    return Redirect(GetTwitterAccount());
-                default:
-                    throw new ArgumentOutOfRangeException();
+                this._googleService.ExecuteRequest();
             }
+
+            //switch (accountType)
+            //{
+            //    case AccountType.Default:
+            //        break;
+            //    case AccountType.Google:
+            //        return RegisterGoogleAccount();
+            //    case AccountType.Facebook:
+            //        var request = string.Format(GetFacebookCode, this.ClientID, this.FacebookCallbackUrl);
+            //        return Redirect(request);
+            //    case AccountType.Twitter:
+            //        return Redirect(GetTwitterAccount());
+            //    default:
+            //        throw new ArgumentOutOfRangeException();
+            //}
 
             return RedirectToAction("Index", "Home");
         }
@@ -165,75 +169,12 @@ namespace EbookZone.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private ActionResult RegisterGoogleAccount()
+        public ActionResult GoogleAuth()
         {
-            // Response from provider
-            IAuthenticationResponse response = OpenIdProvider.GetResponse();
+            GoogleViewModel model = this._googleService.GetResponse();
+            RegisterViewModel viewModel = Mapper.Map<GoogleViewModel, RegisterViewModel>(model);
 
-            if (response == null)
-            {
-                Identifier id;
-
-                if (Identifier.TryParse(UserOpenId, out id))
-                {
-                    try
-                    {
-                        IAuthenticationRequest request = OpenIdProvider.CreateRequest(UserOpenId);
-
-                        var fetch = new FetchRequest();
-
-                        fetch.Attributes.AddRequired(WellKnownAttributes.Contact.Email);
-                        fetch.Attributes.AddRequired(WellKnownAttributes.Name.First);
-                        fetch.Attributes.AddRequired(WellKnownAttributes.Name.Last);
-
-                        request.AddExtension(fetch);
-
-                        request.AddExtension(new ClaimsRequest
-                        {
-                            FullName = DemandLevel.Require,
-                            Nickname = DemandLevel.Require,
-                            BirthDate = DemandLevel.Require,
-                            Gender = DemandLevel.Require,
-                            Country = DemandLevel.Require
-                        });
-
-                        return request.RedirectingResponse.AsActionResult();
-                    }
-                    catch (ProtocolException ex)
-                    {
-                        TempData["error"] = ex.Message;
-                    }
-                }
-
-                return RedirectToAction("Index", "Login");
-            }
-
-            switch (response.Status)
-            {
-                case AuthenticationStatus.Authenticated:
-                    {
-                        var fetches = response.GetExtension<FetchResponse>(); // fetches - get google account informations
-                        var profileInfo = response.GetExtension<ClaimsResponse>();
-
-                        TempData["id"] = response.ClaimedIdentifier;
-                        return RedirectToAction("Index", "Home");
-                    }
-                case AuthenticationStatus.Canceled:
-                    {
-                        TempData["message"] = "Authentification was cancelled";
-                        return RedirectToAction("Index", "Login");
-                    }
-                case AuthenticationStatus.Failed:
-                    {
-                        TempData["error"] = response.Exception.Message;
-                        TempData["message"] = "Authentification was failed";
-                        return RedirectToAction("Index", "Login");
-                    }
-                default:
-                    {
-                        return RedirectToAction("Index", "Login");
-                    }
-            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using EbookZone.Web.Core;
+using EbookZone.Web.Services;
 using Microsoft.Practices.Unity;
 
 namespace EbookZone.Web.App_Start
@@ -18,9 +19,10 @@ namespace EbookZone.Web.App_Start
             var factory = new UnityControllerFactory(container);
             ControllerBuilder.Current.SetControllerFactory(factory);
 
+            container.RegisterType<IGoogleService, GoogleService>();
+
             // register types
             container.RegisterInstance(Mapper.Engine);
-            // container.RegisterType<ISayHelloService, SayHelloService>();
         }
     }
 }
