@@ -17,6 +17,7 @@ namespace EbookZone.Web.App_Start
 
             container.RegisterType<IGoogleService, GoogleService>();
             container.RegisterType<IFacebookService, FacebookService>();
+            container.RegisterType<ITwitterService, TwitterService>();
 
             // register types
             container.RegisterInstance(Mapper.Engine);
