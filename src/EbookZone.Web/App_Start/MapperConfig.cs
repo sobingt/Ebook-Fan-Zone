@@ -2,6 +2,7 @@
 using EbookZone.Domain;
 using EbookZone.Domain.Enums;
 using EbookZone.Web.Models;
+using EbookZone.Web.Models.Base;
 
 namespace EbookZone.Web.App_Start
 {
@@ -30,6 +31,14 @@ namespace EbookZone.Web.App_Start
                 .ForMember(dest => dest.AccountType, opt => opt.UseValue(AccountType.Twitter))
                 .ForMember(dest => dest.UserType, opt => opt.UseValue(UserType.Reviewer))
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
+
+            Mapper.CreateMap<BoxViewModel, IdentityViewModel>()
+                .ForMember(dest => dest.FirstName, opt => opt.Ignore())
+                .ForMember(dest => dest.LastName, opt => opt.Ignore())
+                .ForMember(dest => dest.Password, opt => opt.Ignore())
+                .ForMember(dest => dest.AccountType, opt => opt.UseValue(AccountType.BoxCloud))
+                .ForMember(dest => dest.UserType, opt => opt.UseValue(UserType.Reviewer))
+                .ForMember(dest => dest.NetworkId, opt => opt.MapFrom(src => src.UserId));
 
             Mapper.CreateMap<User, IdentityViewModel>();
             Mapper.CreateMap<IdentityViewModel, User>()

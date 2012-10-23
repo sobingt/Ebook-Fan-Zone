@@ -209,14 +209,17 @@
     </Compile>
     <Compile Include="Models\Base\BaseListViewModel.cs" />
     <Compile Include="Models\Base\BaseViewModel.cs" />
+    <Compile Include="Models\BoxViewModel.cs" />
     <Compile Include="Models\FacebookViewModel.cs" />
     <Compile Include="Models\GoogleViewModel.cs" />
     <Compile Include="Models\IdentityViewModel.cs" />
     <Compile Include="Models\TwitterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BoxService.cs" />
     <Compile Include="Services\FacebookService.cs" />
     <Compile Include="Services\GoogleService.cs" />
     <Compile Include="Services\IBaseService.cs" />
+    <Compile Include="Services\IBoxService.cs" />
     <Compile Include="Services\IdentityService.cs" />
     <Compile Include="Services\IFacebookService.cs" />
     <Compile Include="Services\IGoogleService.cs" />
@@ -335,6 +338,10 @@
     <ProjectReference Include="..\EbookZone.Repository\EbookZone.Repository.csproj">
       <Project>{957fcf5b-4da0-42ce-8ed9-1e1c9683ddbf}</Project>
       <Name>EbookZone.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EbookZone.Utils\EbookZone.Utils.csproj">
+      <Project>{1c8129ed-1611-4ba5-b171-09d4d2e9ea1d}</Project>
+      <Name>EbookZone.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

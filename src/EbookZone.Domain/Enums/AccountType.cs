@@ -11,6 +11,7 @@ namespace EbookZone.Domain.Enums
         Default,
         Google,
         Facebook,
-        Twitter
+        Twitter,
+        BoxCloud
     }
 }

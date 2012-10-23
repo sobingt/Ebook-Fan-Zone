@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Constants\ApplicationConfig.cs" />
     <Compile Include="Helpers\EFAttributeExt.cs" />
+    <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

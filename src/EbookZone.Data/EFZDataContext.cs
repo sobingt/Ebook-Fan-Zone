@@ -14,8 +14,7 @@ namespace EbookZone.Data
         public EFZDataContext()
             : base(ConnString)
         {
-            //Database.SetInitializer(new DatabaseInitializator<T>());
-            Database.SetInitializer(new CreateDatabaseIfNotExists<EFZDataContext<T>>());
+            Database.SetInitializer(new DatabaseInitializator<T>());
 
             Database.Initialize(true);
 

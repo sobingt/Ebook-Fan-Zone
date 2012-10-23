@@ -22,6 +22,7 @@ namespace EbookZone.Web.App_Start
             container.RegisterType<IFacebookService, FacebookService>();
             container.RegisterType<ITwitterService, TwitterService>();
             container.RegisterType<IIdentityService, IdentityService>();
+            container.RegisterType<IBoxService, BoxService>();
 
             // Repositories
             container.RegisterType<IEntityRepository<User>, UserRepository>();
