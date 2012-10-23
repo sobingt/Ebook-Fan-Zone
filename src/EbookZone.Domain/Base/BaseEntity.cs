@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EbookZone.Domain.Base
@@ -9,7 +8,7 @@ namespace EbookZone.Domain.Base
         private DateTime? _createDate;
         private DateTime? _updateDate;
 
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public DateTime? CreateDate
