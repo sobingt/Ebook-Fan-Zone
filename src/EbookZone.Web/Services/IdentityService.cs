@@ -19,12 +19,15 @@ namespace EbookZone.Web.Services
         {
             User model = Mapper.Map<IdentityViewModel, User>(viewModel);
 
-            if (string.IsNullOrEmpty(model.Password))
+            string password = model.Password;
+
+            if(string.IsNullOrEmpty(password))
             {
-                string password = EncryptionHelper.GenerateToken(7);
-                password = EncryptionHelper.Encrypt(password, model.NetworkId);
-                model.Password = password;
+                password = EncryptionHelper.GenerateToken(9);
             }
+
+            password = EncryptionHelper.Encrypt(password, model.Email);
+            model.Password = password;
 
             _entityRepository.Create(model);
 
