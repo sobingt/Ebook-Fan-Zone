@@ -2,7 +2,6 @@
 using System.Data;
 using System.Linq;
 using EbookZone.Data;
-using EbookZone.Domain;
 using EbookZone.Domain.Base;
 
 namespace EbookZone.Repository.Base

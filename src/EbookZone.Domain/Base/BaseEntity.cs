@@ -9,7 +9,7 @@ namespace EbookZone.Domain.Base
         private DateTime? _updateDate;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public DateTime? CreateDate
         {

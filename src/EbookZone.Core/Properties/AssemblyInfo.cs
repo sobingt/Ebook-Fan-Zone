@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EbookZone.Services")]
+[assembly: AssemblyTitle("EbookZone.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EbookZone.Services")]
+[assembly: AssemblyProduct("EbookZone.Core")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f02798af-8862-4165-9781-5728655a50eb")]
+[assembly: Guid("8618e8be-6023-402d-b2d9-bf922f19d838")]
 
 // Version information for an assembly consists of the following four values:
 //

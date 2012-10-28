@@ -1,6 +1,6 @@
-﻿using EbookZone.Web.Models;
+﻿using EbookZone.ViewModels;
 
-namespace EbookZone.Web.Services
+namespace EbookZone.Services.Interfaces
 {
     public interface IBoxService
     {

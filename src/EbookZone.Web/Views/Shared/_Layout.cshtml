@@ -1,24 +1,90 @@
 ﻿@using System.Web.Optimization
+@using EbookZone.Core
+@using EbookZone.Domain.Enums
 
 @{
     Layout = null;
 }
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" lang="en" />
 
     @Styles.Render("~/Content/styles")
 
-    @Scripts.Render("~/Scripts/jquery")
-    @Scripts.Render("~/Scripts/bootstrap")
+    <script type="text/javascript" src="../../Scripts/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/Common.js"></script>
+
+    <script type="text/javascript">
+
+        function GoogleProcess() {
+            var url = '@Url.Action("Index", "Authorize", new { @registerType = AccountType.Google })';
+            window.location = url;
+        }
+
+        function FacebookProcess() {
+            var url = '@Url.Action("Index", "Authorize", new { @registerType = AccountType.Facebook })';
+            window.location = url;
+        }
+
+        function BoxCloudProcess() {
+            var url = '@Url.Action("Index", "Authorize", new { @registerType = AccountType.BoxCloud })';
+            window.location = url;
+        }
+
+    </script>
 
 </head>
 <body>
-    <div class="container">
+    <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="brand" href="#">Ebook Fan Zone - Social Network</a>
+                @if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign Up<strong class="caret"></strong></a>
+                                <div class="dropdown-menu" style="padding: 15px;">
+                                    @Html.Partial("Partial/_RegisterForm")
+                                </div>
+                            </li>
+                            <li class="divider-vertical"></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+                                <div class="dropdown-menu" style="padding: 15px;">
+                                    @Html.Partial("Partial/_LogOnForm")
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <div class="btn-group pull-right">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="icon-user"></i>&nbsp;@SecurityManager.CurrentUser.UserName
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="icon-wrench"></i>Settings</a></li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Log Out", "LogOut", "Authorize")</li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container" style="clear: both;">
         @RenderBody()
     </div>
+    <footer>
+        <p>&#64; Ebook Fan Zone  2012</p>
+    </footer>
 </body>
 </html>

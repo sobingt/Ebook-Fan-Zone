@@ -1,111 +1,88 @@
 ﻿using System;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace EbookZone.Utils.Helpers
 {
     public static class EncryptionHelper
     {
-        //http://www.dijksterhuis.org/encrypting-decrypting-string/
-
-        public static string Encrypt(string input, string key)
+        public static string ComputeHash(string text)
         {
-            byte[] Results;
-            System.Text.UTF8Encoding UTF8 = new System.Text.UTF8Encoding();
+            SHA1 sha1 = SHA1.Create();
 
-            // Step 1. We hash the passphrase using MD5
-            // We use the MD5 hash generator as the result is a 128 bit byte array
-            // which is a valid length for the TripleDES encoder we use below
+            byte[] input = System.Text.Encoding.UTF8.GetBytes(text);
 
-            MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
-            byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(key));
+            byte[] hash = sha1.ComputeHash(input);
 
-            // Step 2. Create a new TripleDESCryptoServiceProvider object
-            TripleDESCryptoServiceProvider TDESAlgorithm = new TripleDESCryptoServiceProvider();
-
-            // Step 3. Setup the encoder
-            TDESAlgorithm.Key = TDESKey;
-            TDESAlgorithm.Mode = CipherMode.ECB;
-            TDESAlgorithm.Padding = PaddingMode.PKCS7;
-
-            // Step 4. Convert the input string to a byte[]
-            byte[] DataToEncrypt = UTF8.GetBytes(input);
-
-            // Step 5. Attempt to encrypt the string
-            try
-            {
-                ICryptoTransform Encryptor = TDESAlgorithm.CreateEncryptor();
-                Results = Encryptor.TransformFinalBlock(DataToEncrypt, 0, DataToEncrypt.Length);
-            }
-            finally
-            {
-                // Clear the TripleDes and Hashprovider services of any sensitive information
-                TDESAlgorithm.Clear();
-                HashProvider.Clear();
-            }
-
-            // Step 6. Return the encrypted string as a base64 encoded string
-            return Convert.ToBase64String(Results);
+            return Convert.ToBase64String(hash);
         }
 
-        public static string Decrypt(string input, string key)
+        private static readonly byte[] iv = new byte[] { 7, 136, 185, 34, 65, 124, 226, 149, 53, 215, 163, 230, 97, 72, 23, 163 };
+
+        public static string Encrypt(string key, string value)
         {
-            byte[] Results;
-            System.Text.UTF8Encoding UTF8 = new System.Text.UTF8Encoding();
-
-            // Step 1. We hash the passphrase using MD5
-            // We use the MD5 hash generator as the result is a 128 bit byte array
-            // which is a valid length for the TripleDES encoder we use below
-
-            MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
-            byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(input));
-
-            // Step 2. Create a new TripleDESCryptoServiceProvider object
-            TripleDESCryptoServiceProvider TDESAlgorithm = new TripleDESCryptoServiceProvider();
-
-            // Step 3. Setup the decoder
-            TDESAlgorithm.Key = TDESKey;
-            TDESAlgorithm.Mode = CipherMode.ECB;
-            TDESAlgorithm.Padding = PaddingMode.PKCS7;
-
-            // Step 4. Convert the input string to a byte[]
-            byte[] DataToDecrypt = Convert.FromBase64String(key);
-
-            // Step 5. Attempt to decrypt the string
-            try
+            if (!string.IsNullOrEmpty(value))
             {
-                ICryptoTransform Decryptor = TDESAlgorithm.CreateDecryptor();
-                Results = Decryptor.TransformFinalBlock(DataToDecrypt, 0, DataToDecrypt.Length);
-            }
-            finally
-            {
-                // Clear the TripleDes and Hashprovider services of any sensitive information
-                TDESAlgorithm.Clear();
-                HashProvider.Clear();
-            }
+                using (Rijndael cryptor = Rijndael.Create())
+                {
+                    ICryptoTransform transformer = cryptor.CreateEncryptor(
+                        EncryptionHelper.GetBytes(EncryptionHelper.CreateKey(key)), iv);
+                    byte[] source = System.Text.Encoding.UTF8.GetBytes(value);
+                    byte[] encrypted = transformer.TransformFinalBlock(source, 0, source.Length);
 
-            // Step 6. Return the decrypted string in UTF8 format
-            return UTF8.GetString(Results);
+                    return Convert.ToBase64String(encrypted);
+                }
+            }
+            return string.Empty;
         }
 
-        public static string GenerateToken(byte Length)
+        public static string Decrypt(string key, string value)
         {
-            char[] Chars = new char[]
+            if (!string.IsNullOrEmpty(value))
             {
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-            };
+                using (Rijndael cryptor = Rijndael.Create())
+                {
+                    ICryptoTransform transformer = cryptor.CreateDecryptor(
+                        EncryptionHelper.GetBytes(CreateKey(key)), iv);
+                    byte[] source = Convert.FromBase64String(value);
+                    byte[] decrypted = transformer.TransformFinalBlock(source, 0, source.Length);
+                    return System.Text.Encoding.UTF8.GetString(decrypted);
+                }
+            }
+            return string.Empty;
+        }
 
-            string String = string.Empty;
-            Random Random = new Random();
+        private static byte[] GetBytes(string value)
+        {
+            return System.Text.Encoding.UTF8.GetBytes(value);
+        }
 
-            for (byte a = 0; a < Length; a++)
+        private static string CreateKey(string key)
+        {
+            using (Rijndael cryptor = Rijndael.Create())
             {
-                String += Chars[Random.Next(0, 61)];
-            };
+                int minLength = cryptor.LegalKeySizes[0].MinSize / 8;
+                if (key.Length < minLength)
+                {
+                    string result = key;
+                    while (result.Length < minLength)
+                    {
+                        result += "0";
+                    }
 
-            return (String);
+                    return result;
+                }
+                else
+                {
+                    if (key.Length > minLength)
+                    {
+                        return key.Substring(0, minLength);
+                    }
+                    else
+                    {
+                        return key;
+                    }
+                }
+            }
         }
     }
 }

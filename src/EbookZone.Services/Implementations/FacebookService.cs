@@ -1,10 +1,11 @@
 using System.Configuration;
 using System.Web;
-using EbookZone.Web.Models;
+using EbookZone.Services.Interfaces;
+using EbookZone.ViewModels;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace EbookZone.Web.Services
+namespace EbookZone.Services.Implementations
 {
     public class FacebookService : IFacebookService
     {

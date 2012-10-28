@@ -3,8 +3,9 @@ using AutoMapper;
 using EbookZone.Domain;
 using EbookZone.Repository;
 using EbookZone.Repository.Base;
+using EbookZone.Services.Implementations;
+using EbookZone.Services.Interfaces;
 using EbookZone.Web.Core;
-using EbookZone.Web.Services;
 using Microsoft.Practices.Unity;
 
 namespace EbookZone.Web.App_Start
@@ -20,7 +21,6 @@ namespace EbookZone.Web.App_Start
 
             container.RegisterType<IGoogleService, GoogleService>();
             container.RegisterType<IFacebookService, FacebookService>();
-            container.RegisterType<ITwitterService, TwitterService>();
             container.RegisterType<IIdentityService, IdentityService>();
             container.RegisterType<IBoxService, BoxService>();
 

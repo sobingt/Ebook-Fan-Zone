@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace EbookZone.Web.Models
+namespace EbookZone.ViewModels
 {
     public class FacebookViewModel
     {

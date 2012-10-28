@@ -3,9 +3,10 @@ using System.Web;
 using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using DotNetOpenAuth.OpenId.RelyingParty;
-using EbookZone.Web.Models;
+using EbookZone.Services.Interfaces;
+using EbookZone.ViewModels;
 
-namespace EbookZone.Web.Services
+namespace EbookZone.Services.Implementations
 {
     public class GoogleService : IGoogleService
     {

@@ -202,30 +202,11 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Core\EntityAction.cs" />
     <Compile Include="Core\UnityControllerFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Base\BaseListViewModel.cs" />
-    <Compile Include="Models\Base\BaseViewModel.cs" />
-    <Compile Include="Models\BoxViewModel.cs" />
-    <Compile Include="Models\FacebookViewModel.cs" />
-    <Compile Include="Models\GoogleViewModel.cs" />
-    <Compile Include="Models\IdentityViewModel.cs" />
-    <Compile Include="Models\TwitterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BoxService.cs" />
-    <Compile Include="Services\FacebookService.cs" />
-    <Compile Include="Services\GoogleService.cs" />
-    <Compile Include="Services\IBaseService.cs" />
-    <Compile Include="Services\IBoxService.cs" />
-    <Compile Include="Services\IdentityService.cs" />
-    <Compile Include="Services\IFacebookService.cs" />
-    <Compile Include="Services\IGoogleService.cs" />
-    <Compile Include="Services\IIdentityService.cs" />
-    <Compile Include="Services\ITwitterService.cs" />
-    <Compile Include="Services\TwitterService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -235,8 +216,13 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome-ie7.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\error.png" />
+    <Content Include="Content\images\valid.png" />
     <Content Include="Content\site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -296,9 +282,13 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Content\font\fontawesome-webfont.eot" />
+    <Content Include="Content\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\font\fontawesome-webfont.woff" />
     <None Include="Scripts\jquery-1.8.2-vsdoc.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.23.js" />
@@ -320,8 +310,9 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\Partial\_RegisterForm.cshtml" />
+    <Content Include="Views\Shared\Partial\_LogOnForm.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +322,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EbookZone.Core\EbookZone.Core.csproj">
+      <Project>{40c0a1b9-d491-474f-a961-1e68ed1a6e28}</Project>
+      <Name>EbookZone.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EbookZone.Domain\EbookZone.Domain.csproj">
       <Project>{8e57a8d9-946d-4f94-9c17-f0fa694c10df}</Project>
       <Name>EbookZone.Domain</Name>
@@ -339,9 +334,17 @@
       <Project>{957fcf5b-4da0-42ce-8ed9-1e1c9683ddbf}</Project>
       <Name>EbookZone.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EbookZone.Services\EbookZone.Services.csproj">
+      <Project>{e49d5bf7-8cfd-4178-8c13-5a71c3be910f}</Project>
+      <Name>EbookZone.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EbookZone.Utils\EbookZone.Utils.csproj">
       <Project>{1c8129ed-1611-4ba5-b171-09d4d2e9ea1d}</Project>
       <Name>EbookZone.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EbookZone.ViewModels\EbookZone.ViewModels.csproj">
+      <Project>{54da2f28-96a2-422a-9178-257b5332fbf7}</Project>
+      <Name>EbookZone.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

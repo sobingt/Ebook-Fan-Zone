@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using EbookZone.Web.Core;
+using EbookZone.Core;
 using EbookZone.Web.Models.Base;
 
-namespace EbookZone.Web.Services
+namespace EbookZone.Services.Interfaces
 {
     public interface IBaseService<T> where T : BaseViewModel
     {

@@ -1,4 +1,4 @@
-﻿namespace EbookZone.Web.Models
+﻿namespace EbookZone.ViewModels
 {
     public class BoxViewModel
     {
