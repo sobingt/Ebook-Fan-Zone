@@ -21,4 +21,22 @@
             $(label).closest('.control-group').addClass('success');
         }
     });
+
+    $("#loginForm").validate({
+        rules: {
+            Email: {
+                required: true,
+                email: true
+            },
+            Password: {
+                required: true
+            }
+        },
+        highlight: function (label) {
+            $(label).closest('.control-group').addClass('error');
+        },
+        success: function (label) {
+            $(label).closest('.control-group').addClass('success');
+        }
+    });
 });
