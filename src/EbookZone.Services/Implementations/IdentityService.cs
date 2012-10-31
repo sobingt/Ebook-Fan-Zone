@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -63,12 +64,40 @@ namespace EbookZone.Services.Implementations
 
         public bool Login(IdentityViewModel viewModel, AccountType accountType, bool afterRegster)
         {
-            var user = _entityRepository.Load().SingleOrDefault(x => x.Email == viewModel.Email);
+            User user = null;
+
+            if(accountType != AccountType.Default)
+            {
+                if(accountType == AccountType.BoxCloud)
+                {
+                    user =
+                        _entityRepository.Load().SingleOrDefault(
+                            x => x.Email == viewModel.Email && x.BoxCloudId == viewModel.BoxCloudId);
+                }
+
+                if(accountType == AccountType.Facebook)
+                {
+                    user =
+                        _entityRepository.Load().SingleOrDefault(
+                            x => x.Email == viewModel.Email && x.FacebookId == viewModel.FacebookId);
+                }
+
+                if(accountType == AccountType.Google)
+                {
+                    user =
+                        _entityRepository.Load().SingleOrDefault(
+                            x => x.Email == viewModel.Email && x.GoogleId == viewModel.GoogleId);
+                }
+            }
+            else
+            {
+                string password = EncryptionHelper.Decrypt(viewModel.Email, viewModel.Password);
+                user = _entityRepository.Load().SingleOrDefault(x => x.Email == viewModel.Email && x.Password == password);
+            }
 
             if (user != null && user.Id.HasValue)
             {
                 SaveCookie(user.Id.Value, user.Email);
-
                 return true;
             }
 
@@ -84,11 +113,11 @@ namespace EbookZone.Services.Implementations
         {
             DateTime dt = DateTime.Now;
 
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, userId.ToString(), dt, dt.AddMinutes(30), false, userEmail, FormsAuthentication.FormsCookiePath);
+            var ticket = new FormsAuthenticationTicket(1, userId.ToString(CultureInfo.InvariantCulture), dt, dt.AddMinutes(30), false, userEmail, FormsAuthentication.FormsCookiePath);
 
             string hash = FormsAuthentication.Encrypt(ticket);
 
-            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash)
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash)
                 {
                     HttpOnly = true,
                     Secure = FormsAuthentication.RequireSSL,

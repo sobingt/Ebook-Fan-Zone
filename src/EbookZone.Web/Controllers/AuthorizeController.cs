@@ -62,6 +62,11 @@ namespace EbookZone.Web.Controllers
         [HttpPost]
         public ActionResult LogOn(IdentityViewModel viewModel)
         {
+            if(_identityService.Login(viewModel, AccountType.Default, false))
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+
             return RedirectToAction("Index", "Dashboard");
         }
 

@@ -5,7 +5,6 @@
         Default,
         Google,
         Facebook,
-        Twitter,
         BoxCloud
     }
 }
