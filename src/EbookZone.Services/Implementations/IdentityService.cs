@@ -44,11 +44,9 @@ namespace EbookZone.Services.Implementations
 
             string password = user.Password;
 
-            if (string.IsNullOrEmpty(password))
-            {
-                password = EncryptionHelper.Encrypt(user.Email, user.Email);
-                user.Password = password;
-            }
+            password = EncryptionHelper.Encrypt(user.Email, string.IsNullOrEmpty(password) ? user.Email : user.Password);
+
+            user.Password = password;
 
             if (!user.Id.HasValue)
             {
