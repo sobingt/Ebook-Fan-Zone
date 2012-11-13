@@ -1,88 +1,71 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace EbookZone.Utils.Helpers
 {
     public static class EncryptionHelper
     {
-        public static string ComputeHash(string text)
+        public static string Encrypt(string salt, string password)
         {
-            SHA1 sha1 = SHA1.Create();
+            byte[] results;
+            var utf8 = new UTF8Encoding();
 
-            byte[] input = System.Text.Encoding.UTF8.GetBytes(text);
+            var hashProvider = new MD5CryptoServiceProvider();
+            byte[] tdesKey = hashProvider.ComputeHash(utf8.GetBytes(salt));
 
-            byte[] hash = sha1.ComputeHash(input);
-
-            return Convert.ToBase64String(hash);
-        }
-
-        private static readonly byte[] iv = new byte[] { 7, 136, 185, 34, 65, 124, 226, 149, 53, 215, 163, 230, 97, 72, 23, 163 };
-
-        public static string Encrypt(string key, string value)
-        {
-            if (!string.IsNullOrEmpty(value))
+            var tdesAlgorithm = new TripleDESCryptoServiceProvider
             {
-                using (Rijndael cryptor = Rijndael.Create())
-                {
-                    ICryptoTransform transformer = cryptor.CreateEncryptor(
-                        EncryptionHelper.GetBytes(EncryptionHelper.CreateKey(key)), iv);
-                    byte[] source = System.Text.Encoding.UTF8.GetBytes(value);
-                    byte[] encrypted = transformer.TransformFinalBlock(source, 0, source.Length);
+                Key = tdesKey,
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
 
-                    return Convert.ToBase64String(encrypted);
-                }
-            }
-            return string.Empty;
-        }
+            byte[] dataToEncrypt = utf8.GetBytes(password);
 
-        public static string Decrypt(string key, string value)
-        {
-            if (!string.IsNullOrEmpty(value))
+            try
             {
-                using (Rijndael cryptor = Rijndael.Create())
-                {
-                    ICryptoTransform transformer = cryptor.CreateDecryptor(
-                        EncryptionHelper.GetBytes(CreateKey(key)), iv);
-                    byte[] source = Convert.FromBase64String(value);
-                    byte[] decrypted = transformer.TransformFinalBlock(source, 0, source.Length);
-                    return System.Text.Encoding.UTF8.GetString(decrypted);
-                }
+                ICryptoTransform encryptor = tdesAlgorithm.CreateEncryptor();
+                results = encryptor.TransformFinalBlock(dataToEncrypt, 0, dataToEncrypt.Length);
             }
-            return string.Empty;
-        }
-
-        private static byte[] GetBytes(string value)
-        {
-            return System.Text.Encoding.UTF8.GetBytes(value);
-        }
-
-        private static string CreateKey(string key)
-        {
-            using (Rijndael cryptor = Rijndael.Create())
+            finally
             {
-                int minLength = cryptor.LegalKeySizes[0].MinSize / 8;
-                if (key.Length < minLength)
-                {
-                    string result = key;
-                    while (result.Length < minLength)
-                    {
-                        result += "0";
-                    }
-
-                    return result;
-                }
-                else
-                {
-                    if (key.Length > minLength)
-                    {
-                        return key.Substring(0, minLength);
-                    }
-                    else
-                    {
-                        return key;
-                    }
-                }
+                tdesAlgorithm.Clear();
+                hashProvider.Clear();
             }
+
+            return Convert.ToBase64String(results);
+        }
+
+        public static string Decrypt(string salt, string password)
+        {
+            byte[] results;
+            var utf8 = new UTF8Encoding();
+
+            var hashProvider = new MD5CryptoServiceProvider();
+            byte[] tdesKey = hashProvider.ComputeHash(utf8.GetBytes(salt));
+
+            var tdesAlgorithm = new TripleDESCryptoServiceProvider
+            {
+                Key = tdesKey,
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
+
+            byte[] dataToDecrypt = Convert.FromBase64String(password);
+
+            try
+            {
+                ICryptoTransform decryptor = tdesAlgorithm.CreateDecryptor();
+                results = decryptor.TransformFinalBlock(dataToDecrypt, 0, dataToDecrypt.Length);
+            }
+            finally
+            {
+                tdesAlgorithm.Clear();
+                hashProvider.Clear();
+            }
+
+            return utf8.GetString(results);
         }
     }
 }

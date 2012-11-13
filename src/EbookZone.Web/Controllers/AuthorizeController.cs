@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using AutoMapper;
+using EbookZone.Core;
 using EbookZone.Domain.Enums;
 using EbookZone.Services.Interfaces;
 using EbookZone.ViewModels;
@@ -64,10 +65,15 @@ namespace EbookZone.Web.Controllers
         {
             if(_identityService.Login(viewModel, AccountType.Default, false))
             {
+                if(SecurityManager.CurrentUser.UserType == UserType.Administrator)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+
                 return RedirectToAction("Index", "Dashboard");
             }
 
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult LogOut()
@@ -95,9 +101,9 @@ namespace EbookZone.Web.Controllers
         public ActionResult BoxStorageAuth()
         {
             var ticket = this.Request.Params["ticket"];
-            var auth_token = this.Request.Params["auth_token"];
+            var authToken = this.Request.Params["auth_token"];
 
-            var model = _boxService.GetAccount(ticket, auth_token);
+            var model = _boxService.GetAccount(ticket, authToken);
             var viewModel = Mapper.Map<BoxViewModel, IdentityViewModel>(model);
 
             return this.Register(viewModel);

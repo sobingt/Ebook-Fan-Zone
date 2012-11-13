@@ -9,7 +9,7 @@ namespace EbookZone.Utils.Constants
         #region Box Service
 
         public static string ApiKey = @"cuyr8txmnzm7itqvu84kxc8myjek9xuw";
-        public static string _apiUrl2 = @"https://api.box.com/2.0/";
+        public static string ApiUrl2 = @"https://api.box.com/2.0/";
         public static string ApiUrlOld = @"https://www.box.com/api/1.0/";
         public static string UserRedirectAuthUrl = @"https://www.box.com/api/1.0/auth/{0}";
         public static string ResourceRest = "rest";

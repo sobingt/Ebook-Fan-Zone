@@ -49,12 +49,12 @@ namespace EbookZone.Services.Implementations
                 return null;
             }
 
-            Uri uri = new Uri(response.ClaimedIdentifier.ToString());
+            var uri = new Uri(response.ClaimedIdentifier.ToString());
             var query = HttpUtility.ParseQueryString(uri.Query);
             string id = query["id"];
             var fetches = response.GetExtension<FetchResponse>();
 
-            GoogleViewModel viewModel = new GoogleViewModel
+            var viewModel = new GoogleViewModel
                 {
                     GoogleId = id,
                     FirstName = fetches.GetAttributeValue(WellKnownAttributes.Name.First),

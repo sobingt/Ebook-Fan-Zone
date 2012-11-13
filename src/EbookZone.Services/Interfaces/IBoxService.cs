@@ -6,6 +6,6 @@ namespace EbookZone.Services.Interfaces
     {
         void ExecuteRequest();
 
-        BoxViewModel GetAccount(string ticket, string auth_token);
+        BoxViewModel GetAccount(string ticket, string authToken);
     }
 }

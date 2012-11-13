@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using EbookZone.Core;
-using EbookZone.Web.Models.Base;
+using EbookZone.ViewModels.Base;
 
 namespace EbookZone.Services.Interfaces
 {

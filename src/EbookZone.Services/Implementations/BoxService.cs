@@ -21,7 +21,7 @@ namespace EbookZone.Services.Implementations
             HttpContext.Current.Response.Redirect(string.Format(ApplicationConfig.UserRedirectAuthUrl, response.Data.Ticket));
         }
 
-        public BoxViewModel GetAccount(string ticket, string auth_token)
+        public BoxViewModel GetAccount(string ticket, string authToken)
         {
             var client = new RestClient(ApplicationConfig.ApiUrlOld);
             var request = new RestRequest(Method.GET) { Resource = ApplicationConfig.ResourceRest };

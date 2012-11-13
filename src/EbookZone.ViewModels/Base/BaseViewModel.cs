@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EbookZone.Web.Models.Base
+namespace EbookZone.ViewModels.Base
 {
     public class BaseViewModel
     {

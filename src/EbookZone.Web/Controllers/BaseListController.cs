@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using EbookZone.Core;
-using EbookZone.Services;
 using EbookZone.Services.Interfaces;
-using EbookZone.Web.Models.Base;
+using EbookZone.ViewModels.Base;
 
 namespace EbookZone.Web.Controllers
 {
