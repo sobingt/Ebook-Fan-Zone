@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 using AutoMapper;
-using EbookZone.Core;
 using EbookZone.Domain.Enums;
 using EbookZone.Services.Interfaces;
 using EbookZone.ViewModels;
@@ -65,11 +64,6 @@ namespace EbookZone.Web.Controllers
         {
             if(_identityService.Login(viewModel, AccountType.Default, false))
             {
-                if(SecurityManager.CurrentUser.UserType == UserType.Administrator)
-                {
-                    return RedirectToAction("Index", "Admin");
-                }
-
                 return RedirectToAction("Index", "Dashboard");
             }
 

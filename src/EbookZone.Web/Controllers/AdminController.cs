@@ -1,20 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using AutoMapper;
+using EbookZone.Core;
+using EbookZone.ViewModels;
 
 namespace EbookZone.Web.Controllers
 {
     public class AdminController : Controller
     {
-        //
-        // GET: /Admin/
-
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new IdentityViewModel();
+            viewModel = Mapper.Map(SecurityManager.CurrentUser, viewModel);
+
+            return View(viewModel);
         }
 
+        [HttpPost]
+        public ActionResult Save()
+        {
+            return RedirectToAction("Index");
+        }
     }
 }

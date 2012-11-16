@@ -17,8 +17,7 @@ namespace EbookZone.Data
                                         AccountType = AccountType.Default,
                                         UserType = UserType.Administrator,
                                         Email = "admin@ebook-fan-zone.com",
-                                        FirstName = "Administrator",
-                                        LastName = "",
+                                        UserName = "Administrator",
                                         Password = EncryptionHelper.Encrypt("admin@ebook-fan-zone.com", "P@ssw0rd")
                                     };
 

@@ -1,6 +1,18 @@
-﻿@{
+﻿@model EbookZone.ViewModels.IdentityViewModel
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-Welcome to administration page!!! ) 
+@using (Html.BeginForm("Save", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="UserName">User Name:</label>
+            <div class="controls">
+                @Html.TextBoxFor(x=>x.UserName, new { @class = "input-xlarge uneditable-input", @disabled = "true" })
+            </div>
+        </div>
+    </div>
+}

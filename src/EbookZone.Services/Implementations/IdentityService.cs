@@ -89,7 +89,7 @@ namespace EbookZone.Services.Implementations
             }
             else
             {
-                string password = EncryptionHelper.Decrypt(viewModel.Email, viewModel.Password);
+                string password = EncryptionHelper.Encrypt(viewModel.Email, viewModel.Password);
                 user = _entityRepository.Load().SingleOrDefault(x => x.Email == viewModel.Email && x.Password == password);
             }
 
