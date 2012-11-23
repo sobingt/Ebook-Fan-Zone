@@ -17,7 +17,8 @@ namespace EbookZone.Web.App_Start
                 .ForMember(dest => dest.Password, opt => opt.Ignore())
                 .ForMember(dest => dest.GoogleId, opt => opt.MapFrom(src => src.GoogleId))
                 .ForMember(dest => dest.FacebookId, opt => opt.Ignore())
-                .ForMember(dest => dest.BoxCloudId, opt => opt.Ignore());
+                .ForMember(dest => dest.BoxCloudId, opt => opt.Ignore())
+                .ForMember(dest => dest.ConfirmPassword, opt => opt.Ignore());
 
             Mapper.CreateMap<FacebookViewModel, IdentityViewModel>()
                 .ForMember(dest => dest.ParentNetworkId, opt => opt.MapFrom(src => src.FacebookId))
@@ -26,7 +27,8 @@ namespace EbookZone.Web.App_Start
                 .ForMember(dest => dest.Password, opt => opt.Ignore())
                 .ForMember(dest => dest.GoogleId, opt => opt.Ignore())
                 .ForMember(dest => dest.FacebookId, opt => opt.MapFrom(src => src.FacebookId))
-                .ForMember(dest => dest.BoxCloudId, opt => opt.Ignore());
+                .ForMember(dest => dest.BoxCloudId, opt => opt.Ignore())
+                .ForMember(dest => dest.ConfirmPassword, opt => opt.Ignore());
 
             Mapper.CreateMap<BoxViewModel, IdentityViewModel>()
                 .ForMember(dest => dest.FirstName, opt => opt.Ignore())
@@ -37,9 +39,11 @@ namespace EbookZone.Web.App_Start
                 .ForMember(dest => dest.ParentNetworkId, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.GoogleId, opt => opt.Ignore())
                 .ForMember(dest => dest.FacebookId, opt => opt.Ignore())
-                .ForMember(dest => dest.BoxCloudId, opt => opt.MapFrom(src => src.UserId));
+                .ForMember(dest => dest.BoxCloudId, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.ConfirmPassword, opt => opt.Ignore());
 
-            Mapper.CreateMap<User, IdentityViewModel>();
+            Mapper.CreateMap<User, IdentityViewModel>()
+                .ForMember(dest=>dest.ConfirmPassword, opt=>opt.Ignore());
             Mapper.CreateMap<IdentityViewModel, User>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreateDate, opt => opt.Ignore())

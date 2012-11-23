@@ -21,6 +21,9 @@ namespace EbookZone.Web.App_Start
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
                 "~/Scripts/bootstrap.min.js")
             );
+
+            bundles.Add(new ScriptBundle("~/Scripts/knockout").Include(
+                "~/Scripts/knockout-2.1.0.js"));
         }
     }
 }
