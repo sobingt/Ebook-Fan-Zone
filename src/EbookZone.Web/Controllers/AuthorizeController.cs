@@ -53,7 +53,7 @@ namespace EbookZone.Web.Controllers
         {
             if (_identityService.Register(viewModel))
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Index", "User");
             }
 
             return RedirectToAction("Index", "Home");
@@ -62,9 +62,9 @@ namespace EbookZone.Web.Controllers
         [HttpPost]
         public ActionResult LogOn(IdentityViewModel viewModel)
         {
-            if(_identityService.Login(viewModel, AccountType.Default, false))
+            if (_identityService.Login(viewModel, AccountType.Default, false))
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Index", "User");
             }
 
             return RedirectToAction("Index", "Home");

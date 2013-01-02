@@ -47,6 +47,7 @@ namespace EbookZone.Services.Implementations
             password = EncryptionHelper.Encrypt(user.Email, string.IsNullOrEmpty(password) ? user.Email : user.Password);
 
             user.Password = password;
+            user.UserType = UserType.Reader;
 
             if (!user.Id.HasValue)
             {
